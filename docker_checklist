@@ -1,0 +1,40 @@
+TODO: Cite references.
+
+Docker Container Hardening Checklist
+Summary:
+Checklist for hardening docker containers.
+ 
+Items:
+Host OS
+o   Hardened Kernel (GrSecurity,  PAX).
+o   Apparmor/SELinux.
+o   Segregation of containers by data sensitivity.
+o   Keep Docker and Host OS patched according to the patch policy.
+o   Capture host and docker logs.
+Images
+o   Enable DOCKER_CONTENT_TRUST environment variable, only signed images can be pulled.
+o   Store root key offline
+o   Backup signing keys; rotate every 30 days and expire old keys.
+Containers
+o   Capture container logs.
+o   Container processes run as non-privileged USER.
+o   Use Docker User Namespace to re-map processes to a non-privileged user if the process need to be run at the root level. 
+o   Limit access to run Docker.
+o   Remove setUID/setGID binaries.
+o   Mount filesystems read-only.
+o   Place limits on system resources
+o   Limit kernel calls
+o   Restrict network access.
+o   Do not use privileged command line option.
+o   Limit port exposure.
+Secrets
+o   Do not store secrets in the Dockerfile /included in the image.
+o   Secrets are not stored in environment variables.
+o   Secrets are not stored in volume mounts on the host.
+o   Secrets are stored in a dedicated secrets management system.
+o   Secrets are rotated at a maximum every 90 days.
+Base Image
+o   Specify package versions and hash in FROM tag.
+o   Scan images for vulnerabilities (X-ray, Clarify).
+o   Update base image every 30 days and re-deploy containers.
+
